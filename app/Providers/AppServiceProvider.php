@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Relation::enforceMorphMap([
+            'ability' => \App\Models\Ability::class,
+            'skill' => \App\Models\Skill::class,
+            'stat' => \App\Models\Stat::class,
+        ]);
     }
 }

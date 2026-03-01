@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('minecraft_uuid')->unique()->nullable();
+            $table->string('minecraft_name')->nullable();
+            $table->string('discord_id')->unique()->nullable();
+            $table->string('discord_username')->nullable();
+            $table->smallInteger('role')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
