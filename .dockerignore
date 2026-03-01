@@ -1,0 +1,44 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Environment files (injected at runtime, never baked in)
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules
+
+# Built assets (rebuilt in the node stage of the Dockerfile)
+/public/build
+/public/hot
+
+# PHP dependencies (reinstalled in the Dockerfile)
+/vendor
+
+# Laravel storage (managed via volumes)
+/storage/*.key
+/storage/pail
+/storage/logs
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/views
+
+# Test / dev artefacts
+.phpunit.cache
+.phpunit.result.cache
+phpunit.xml
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+/.idea
+/.vscode
+/.zed
+/.nova
+/.fleet
+
+# Docs
+*.md
