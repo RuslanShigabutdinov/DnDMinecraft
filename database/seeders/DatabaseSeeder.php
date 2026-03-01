@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
             AlignmentSeeder::class,
             AbilitySeeder::class,
             SkillSeeder::class,
+            StatSeeder::class,
+            ClassesSeeder::class,
         ]);
     }
 }
