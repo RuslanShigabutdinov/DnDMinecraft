@@ -30,7 +30,7 @@ class PaladinSeeder extends Seeder
         foreach ($statBonuses as [$slug, $value]) {
             $stat = Stat::where('slug', $slug)->first();
             ClassBonus::firstOrCreate(
-                ['class_id' => $paladin->id, 'modifiable_type' => Stat::class, 'modifiable_id' => $stat->id],
+                ['class_id' => $paladin->id, 'modifiable_type' => $stat->getMorphClass(), 'modifiable_id' => $stat->id],
                 ['value' => $value],
             );
         }
@@ -44,7 +44,7 @@ class PaladinSeeder extends Seeder
         foreach ($skillBonuses as [$slug, $value]) {
             $skill = Skill::where('slug', $slug)->first();
             ClassBonus::firstOrCreate(
-                ['class_id' => $paladin->id, 'modifiable_type' => Skill::class, 'modifiable_id' => $skill->id],
+                ['class_id' => $paladin->id, 'modifiable_type' => $skill->getMorphClass(), 'modifiable_id' => $skill->id],
                 ['value' => $value],
             );
         }

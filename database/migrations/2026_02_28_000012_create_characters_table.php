@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('background')->nullable();
             $table->string('gender')->nullable();
-            $table->string('age')->nullable();
-            $table->string('height')->nullable();
-            $table->string('weight')->nullable();
+            $table->smallInteger('age')->nullable();
+            $table->smallInteger('height_cm')->nullable();
+            $table->integer('weight_g')->nullable();
             $table->string('size')->default('Medium');
             $table->smallInteger('current_hp')->default(0);
             $table->smallInteger('temporary_hp')->default(0);

@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class PointAllocation extends Model
 {
+    public const ALLOCATABLE_TYPES = ['ability', 'skill'];
+
     protected $fillable = [
         'character_id',
         'allocatable_type',

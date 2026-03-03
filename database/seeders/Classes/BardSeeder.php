@@ -30,7 +30,7 @@ class BardSeeder extends Seeder
         foreach ($abilityBonuses as [$slug, $value]) {
             $ability = Ability::where('slug', $slug)->first();
             ClassBonus::firstOrCreate(
-                ['class_id' => $bard->id, 'modifiable_type' => Ability::class, 'modifiable_id' => $ability->id],
+                ['class_id' => $bard->id, 'modifiable_type' => $ability->getMorphClass(), 'modifiable_id' => $ability->id],
                 ['value' => $value],
             );
         }
@@ -46,7 +46,7 @@ class BardSeeder extends Seeder
         foreach ($skillBonuses as [$slug, $value]) {
             $skill = Skill::where('slug', $slug)->first();
             ClassBonus::firstOrCreate(
-                ['class_id' => $bard->id, 'modifiable_type' => Skill::class, 'modifiable_id' => $skill->id],
+                ['class_id' => $bard->id, 'modifiable_type' => $skill->getMorphClass(), 'modifiable_id' => $skill->id],
                 ['value' => $value],
             );
         }
