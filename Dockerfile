@@ -24,6 +24,7 @@ RUN apk add --no-cache \
         libpq-dev \
         libzip-dev \
         oniguruma-dev \
+        su-exec \
         unzip \
     && apk add --no-cache --virtual .build-deps \
         autoconf \
@@ -50,7 +51,6 @@ WORKDIR /var/www/html
 # Install PHP dependencies (separate layer for caching)
 COPY composer.json composer.lock ./
 RUN composer install \
-    --no-dev \
     --no-scripts \
     --no-autoloader \
     --prefer-dist
@@ -64,16 +64,19 @@ COPY --from=assets --chown=www-data:www-data /app/public/build ./public/build
 # Generate optimised autoloader and run post-install discovery
 RUN composer dump-autoload --optimize
 
+# Save vendor to a seed location outside the app dir so the named volume
+# can be populated from it on first start or after a rebuild
+RUN cp -r /var/www/html/vendor /var/www/vendor-seed \
+    && md5sum /var/www/html/composer.lock | awk '{print $1}' > /var/www/vendor-seed/.composer-hash
+
 # Ensure correct ownership on writable directories
 RUN mkdir -p storage/framework/views storage/framework/cache storage/framework/sessions \
     && chown -R www-data:www-data storage bootstrap/cache \
-    && mkdir -p /mnt/public && chown www-data:www-data /mnt/public
+    && mkdir -p /mnt/public && chmod 777 /mnt/public
 
 COPY docker/php/local.ini /usr/local/etc/php/conf.d/local.ini
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
-
-USER www-data
 
 EXPOSE 9000
 

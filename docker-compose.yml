@@ -10,17 +10,11 @@ services:
     volumes:
       - .:/var/www/html
       - vendor-data:/var/www/html/vendor
-      - storage-data:/var/www/html/storage/app/public
       - public-data:/mnt/public
     env_file: .env
     environment:
       DB_HOST: postgres
       REDIS_HOST: redis
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
     networks:
       - app-network
 
@@ -49,7 +43,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD", "pg_isready"]
+      test: ["CMD", "pg_isready", "-U", "${DB_USERNAME}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -73,6 +67,7 @@ services:
 
   node:
     image: node:22-alpine
+    user: "${UID}:${GID}"
     working_dir: /app
     volumes:
       - .:/app
