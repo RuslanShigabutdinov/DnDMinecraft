@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ClassResource;
+use App\Http\Resources\Class\ClassResource;
 use App\Models\CharacterClass;
 
 class ClassController extends Controller

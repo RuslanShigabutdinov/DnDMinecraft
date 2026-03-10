@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Class;
 
+use App\Http\Resources\Bonus\BonusResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,9 +15,9 @@ class ClassResource extends JsonResource
             'name'        => $this->name,
             'description' => $this->description,
             'bonuses'     => $this->when($this->relationLoaded('bonuses'), fn() => [
-                'stats'     => ClassBonusResource::collection($this->bonuses->where('modifiable_type', 'stat')),
-                'abilities' => ClassBonusResource::collection($this->bonuses->where('modifiable_type', 'ability')),
-                'skills'    => ClassBonusResource::collection($this->bonuses->where('modifiable_type', 'skill')),
+                'stats'     => BonusResource::collection($this->bonuses->where('modifiable_type', 'stat')),
+                'abilities' => BonusResource::collection($this->bonuses->where('modifiable_type', 'ability')),
+                'skills'    => BonusResource::collection($this->bonuses->where('modifiable_type', 'skill')),
             ]),
         ];
     }
