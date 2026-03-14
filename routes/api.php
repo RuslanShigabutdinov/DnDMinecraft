@@ -17,4 +17,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/character', [CharacterController::class, 'store'])->name('characters.store');
 
     Route::get('/feats', [FeatController::class, 'list'])->name('feats.list');
+    Route::get('/feats/rarities', [FeatController::class, 'list'])->name('feats.listRarities');
 });
