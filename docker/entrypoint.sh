@@ -16,14 +16,22 @@ if [ "${1}" = "php-fpm" ]; then
     chown -R www-data:www-data storage bootstrap/cache
     chmod -R 775 storage bootstrap/cache
 
-    echo "Caching configuration..."
-    su-exec www-data php artisan config:cache
+    echo "Clearing stale caches..."
+    su-exec www-data php artisan optimize:clear
 
-    echo "Caching routes..."
-    su-exec www-data php artisan route:cache
+    if [ "${APP_ENV}" != "local" ]; then
+        echo "Caching configuration..."
+        su-exec www-data php artisan config:cache
+
+        echo "Caching routes..."
+        su-exec www-data php artisan route:cache
+    fi
 
     echo "Running migrations..."
     su-exec www-data php artisan migrate --force
+
+    echo "Seeding reference data..."
+    su-exec www-data php artisan db:seed --force
 
     echo "Publishing public assets..."
     cp -rf /var/www/html/public/. /mnt/public/
